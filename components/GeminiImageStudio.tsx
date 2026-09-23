@@ -83,7 +83,7 @@ export const GeminiImageStudio: React.FC<GeminiImageStudioProps> = ({ onImageSav
           aspectRatio,
           imageSize,
           selectedStyle,
-          'gemini-3.1-flash-image'
+          'gemini-3.1-flash-image-preview'
         );
         setResultImage(res.imageUrl);
         setResultDesc(res.description);
@@ -92,7 +92,7 @@ export const GeminiImageStudio: React.FC<GeminiImageStudioProps> = ({ onImageSav
           prompt,
           sourceImage!,
           'image/png',
-          'gemini-3.1-flash-image'
+          'gemini-3.1-flash-image-preview'
         );
         setResultImage(res.imageUrl);
         setResultDesc(res.description);
@@ -125,7 +125,7 @@ export const GeminiImageStudio: React.FC<GeminiImageStudioProps> = ({ onImageSav
                 Gemini Image Alchemist
               </h3>
               <span className="px-2 py-0.5 rounded-full bg-[#00F5D4]/10 border border-[#00F5D4]/30 text-[9px] font-mono font-bold uppercase text-[#00F5D4]">
-                gemini-3.1-flash-image
+                gemini-3.1-flash-image-preview
               </span>
             </div>
             <p className="text-xs text-gray-400 font-mono">

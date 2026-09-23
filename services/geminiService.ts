@@ -27,7 +27,7 @@ export const CHAT_ROLE_PRESETS: ChatRolePreset[] = [
     systemInstruction: `You are the Executive Creative Director & AI Co-Pilot at Janu's Creations.
 You provide sophisticated, high-energy, actionable strategic guidance for content creators, artists, and founders.
 Speak with confidence, creative authority, and precision. Provide bold ideas, structure, and revenue-generating advice.`,
-    defaultModel: 'gemini-3.8-flash'
+    defaultModel: 'gemini-3.5-flash'
   },
   {
     id: 'music-lyricist',
@@ -37,7 +37,7 @@ Speak with confidence, creative authority, and precision. Provide bold ideas, st
     systemInstruction: `You are the Master Songwriter and Sonic Producer at Janu's Creations.
 You specialize in writing infectious hooks, emotive lyrics across all genres (Rap, Gospel, Pop, Metal, Synthwave, Country),
 suggesting BPM/Key architectures, and acoustic stem separation directives.`,
-    defaultModel: 'gemini-3.8-flash'
+    defaultModel: 'gemini-3.5-flash'
   },
   {
     id: 'reel-strategist',
@@ -47,17 +47,17 @@ suggesting BPM/Key architectures, and acoustic stem separation directives.`,
     systemInstruction: `You are the Viral Retention Scientist at Janu's Creations.
 You craft frame-by-frame script breakdowns, pattern-interrupt hooks, visual effects prompts, and pacing guidelines
 designed to maximize retention and algorithm velocity on Reels, Shorts, and TikTok.`,
-    defaultModel: 'gemini-3.8-flash'
+    defaultModel: 'gemini-3.5-flash'
   },
   {
     id: 'monetization-advisor',
-    name: 'Creator Wealth & Monetization Agent',
+    name: 'Creator Wealth & Complex Strategy',
     icon: 'fa-sack-dollar',
-    description: 'Pricing models, sponsor pitch kits, 85/15 royalty splits, and digital product launches.',
-    systemInstruction: `You are the Chief Monetization Strategist at Janu's Creations.
+    description: 'Pricing models, sponsor pitch kits, 85/15 royalty splits, and deep business logic.',
+    systemInstruction: `You are the Chief Monetization Strategist and Deep Business Advisor at Janu's Creations.
 You guide creators on building six-figure creator businesses, optimizing tips, memberships, master audio licensing,
-and private community monetization. Provide numerical clarity and sharp pitch frameworks.`,
-    defaultModel: 'gemini-3.8-flash'
+and private community monetization. Provide deep, multi-layered numerical clarity and sharp pitch frameworks.`,
+    defaultModel: 'gemini-3.1-pro-preview'
   },
   {
     id: 'rapid-assistant',
@@ -75,7 +75,7 @@ and private community monetization. Provide numerical clarity and sharp pitch fr
 export async function sendChatMessage(
   messages: Array<{ role: string; content: string }>,
   systemInstruction?: string,
-  model: 'gemini-3.8-flash' | 'gemini-3.5-flash' | 'gemini-3.1-flash-lite' | 'gemini-3.1-pro-preview' | 'gemini-3.7-flash' = 'gemini-3.8-flash',
+  model: 'gemini-3.5-flash' | 'gemini-3.1-pro-preview' | 'gemini-3.1-flash-lite' | 'gemini-3.8-flash' | 'gemini-3.7-flash' = 'gemini-3.5-flash',
   temperature: number = 0.7
 ): Promise<{ text: string; model: string }> {
   const res = await fetch('/api/ai/chat', {
@@ -147,14 +147,14 @@ export async function generateLyriaMusic(
 }
 
 // -------------------------------------------------------------
-// 3. Image Generation with gemini-3.1-flash-image
+// 3. Image Generation with gemini-3.1-flash-image-preview
 // -------------------------------------------------------------
 export async function generateImageAI(
   prompt: string,
   aspectRatio: '1:1' | '16:9' | '9:16' | '4:3' | '3:4' = '16:9',
   imageSize: '512px' | '1K' | '2K' | '4K' = '1K',
   style: string = 'editorial',
-  model: 'gemini-3.1-flash-image' | 'gemini-3.1-flash-lite-image' = 'gemini-3.1-flash-image'
+  model: 'gemini-3.1-flash-image-preview' | 'gemini-3.1-flash-image' | 'gemini-3.1-flash-lite-image' = 'gemini-3.1-flash-image-preview'
 ): Promise<{ imageUrl: string; description: string; model: string }> {
   const res = await fetch('/api/ai/image/generate', {
     method: 'POST',
@@ -182,13 +182,13 @@ export async function generateImageAI(
 }
 
 // -------------------------------------------------------------
-// 4. Image Editing with gemini-3.1-flash-image
+// 4. Image Editing with gemini-3.1-flash-image-preview
 // -------------------------------------------------------------
 export async function editImageAI(
   prompt: string,
   imageBase64: string,
   mimeType: string = 'image/png',
-  model: 'gemini-3.1-flash-image' | 'gemini-3.1-flash-lite-image' = 'gemini-3.1-flash-image'
+  model: 'gemini-3.1-flash-image-preview' | 'gemini-3.1-flash-image' | 'gemini-3.1-flash-lite-image' = 'gemini-3.1-flash-image-preview'
 ): Promise<{ imageUrl: string; description: string; model: string }> {
   const res = await fetch('/api/ai/image/edit', {
     method: 'POST',
@@ -222,7 +222,7 @@ export async function generateVeoVideo(
   aspectRatio: '16:9' | '9:16' = '16:9',
   resolution: '720p' | '1080p' = '720p',
   imageBase64?: string,
-  model: string = 'veo-3.1-lite-generate-preview'
+  model: string = 'veo-3.1-fast-generate-preview'
 ): Promise<{ operationName: string; model: string; aspectRatio: string }> {
   const res = await fetch('/api/ai/video/generate', {
     method: 'POST',

@@ -16,7 +16,7 @@ const GeminiChatbotModal: React.FC<GeminiChatbotModalProps> = ({
   const [selectedRole, setSelectedRole] = useState<ChatRolePreset>(() => {
     return CHAT_ROLE_PRESETS.find(r => r.id === initialRole) || CHAT_ROLE_PRESETS[0];
   });
-  const [selectedModel, setSelectedModel] = useState<'gemini-3.8-flash' | 'gemini-3.5-flash' | 'gemini-3.1-flash-lite' | 'gemini-3.1-pro-preview'>('gemini-3.8-flash');
+  const [selectedModel, setSelectedModel] = useState<'gemini-3.5-flash' | 'gemini-3.1-pro-preview' | 'gemini-3.1-flash-lite' | 'gemini-3.8-flash'>('gemini-3.5-flash');
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome-msg',
@@ -213,10 +213,10 @@ const GeminiChatbotModal: React.FC<GeminiChatbotModalProps> = ({
               onChange={(e: any) => setSelectedModel(e.target.value)}
               className="px-2.5 py-1 rounded-lg bg-black border border-white/20 text-[#00F5D4] text-xs font-mono focus:outline-none focus:border-[#00F5D4]"
             >
-              <option value="gemini-3.8-flash">gemini-3.8-flash (Recommended)</option>
-              <option value="gemini-3.5-flash">gemini-3.5-flash (General)</option>
-              <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite (Fast)</option>
-              <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview (Paid Tier)</option>
+              <option value="gemini-3.5-flash">gemini-3.5-flash (General Tasks)</option>
+              <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview (Complex Tasks)</option>
+              <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite (Fast Tasks)</option>
+              <option value="gemini-3.8-flash">gemini-3.8-flash (Standard)</option>
             </select>
           </div>
         </div>

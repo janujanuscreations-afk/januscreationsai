@@ -29,7 +29,7 @@ export const AISuperStudio: React.FC<AISuperStudioProps> = ({
     {
       id: 'chat',
       title: 'Multi-Turn Co-Pilot',
-      model: 'gemini-3.8-flash',
+      model: 'gemini-3.5-flash / 3.1-pro / flash-lite',
       icon: 'fa-messages',
       gradient: 'from-[#00F5D4] to-[#38BDF8]',
       desc: 'Contextual, multi-turn assistant with customizable system instructions, executive personas, and model switching.',
@@ -39,7 +39,7 @@ export const AISuperStudio: React.FC<AISuperStudioProps> = ({
     {
       id: 'music',
       title: 'Lyria AI Music Studio',
-      model: 'lyria-3-clip-preview & pro',
+      model: 'lyria-3-clip-preview & lyria-3-pro-preview',
       icon: 'fa-music',
       gradient: 'from-[#00F5D4] to-[#C084FC]',
       desc: 'Generate studio-grade audio stems, 30s viral clips, and full track masters from text and mood board images.',
@@ -59,7 +59,7 @@ export const AISuperStudio: React.FC<AISuperStudioProps> = ({
     {
       id: 'video',
       title: 'Veo 3 Video Generator',
-      model: 'veo-3.1-lite-generate-preview',
+      model: 'veo-3.1-fast-generate-preview',
       icon: 'fa-video',
       gradient: 'from-[#C084FC] to-[#FF007F]',
       desc: 'Synthesize cinematic 16:9 widescreen or 9:16 vertical videos from text or animate photos into motion videos.',
@@ -72,14 +72,14 @@ export const AISuperStudio: React.FC<AISuperStudioProps> = ({
       model: 'Hollywood Anamorphic 2.39:1 & Gemini Screenplay',
       icon: 'fa-clapperboard',
       gradient: 'from-[#FF007F] via-[#C084FC] to-[#00FFE0]',
-      desc: 'Multi-scene Hollywood storyboards, Gemini 2.5 screenplay synthesis, 2.39:1 anamorphic framing, and LUT grading.',
+      desc: 'Multi-scene Hollywood storyboards, Gemini screenplay synthesis, 2.39:1 anamorphic framing, and LUT grading.',
       actionLabel: 'Open Movie Director Studio',
       onClick: () => onNavigateToStudio?.('movie'),
     },
     {
       id: 'image',
       title: 'Gemini Image Alchemist',
-      model: 'gemini-3.1-flash-image',
+      model: 'gemini-3.1-flash-image-preview',
       icon: 'fa-wand-magic-sparkles',
       gradient: 'from-[#FF007F] to-[#FCD34D]',
       desc: 'Create up to 4K neural visual artwork from text or apply surgical generative modifications to existing photos.',

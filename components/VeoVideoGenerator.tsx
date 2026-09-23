@@ -49,7 +49,7 @@ export const VeoVideoGenerator: React.FC<VeoVideoGeneratorProps> = ({ onVideoExp
         aspectRatio,
         duration: 6,
         durationFormatted: '0:06',
-        modelUsed: 'veo-3.1-lite-generate-preview',
+        modelUsed: 'veo-3.1-fast-generate-preview',
         fileSize: '7.8 MB',
         tags: ['Veo 3', 'Video Render', aspectRatio, 'AI Motion'],
         isFavorite: true,
@@ -105,7 +105,7 @@ export const VeoVideoGenerator: React.FC<VeoVideoGeneratorProps> = ({ onVideoExp
         aspectRatio,
         resolution,
         sourceImage || undefined,
-        'veo-3.1-lite-generate-preview'
+        'veo-3.1-fast-generate-preview'
       );
 
       const opName = res.operationName;
@@ -181,7 +181,7 @@ export const VeoVideoGenerator: React.FC<VeoVideoGeneratorProps> = ({ onVideoExp
                 Veo 3 Video Generator
               </h3>
               <span className="px-2 py-0.5 rounded-full bg-[#C084FC]/10 border border-[#C084FC]/30 text-[9px] font-mono font-bold uppercase text-[#C084FC]">
-                veo-3.1-lite-generate-preview
+                veo-3.1-fast-generate-preview
               </span>
             </div>
             <p className="text-xs text-gray-400 font-mono">

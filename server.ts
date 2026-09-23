@@ -128,15 +128,15 @@ app.post("/api/ai/chat", async (req, res) => {
 
     const ai = getGenAI();
 
-    // Map model selector (gemini-3.8-flash is primary recommended model)
+// Map model selector (gemini-3.5-flash is general tasks, gemini-3.1-pro-preview for complex tasks, gemini-3.1-flash-lite for fast tasks)
     const allowedModels = [
-      "gemini-3.8-flash",
+      "gemini-3.1-pro-preview",
       "gemini-3.5-flash",
       "gemini-3.1-flash-lite",
-      "gemini-3.1-pro-preview",
+      "gemini-3.8-flash",
       "gemini-3.7-flash",
     ];
-    const targetModel = allowedModels.includes(model) ? model : "gemini-3.8-flash";
+    const targetModel = allowedModels.includes(model) ? model : "gemini-3.5-flash";
 
     // Format chat history for generateContent
     const contents = messages.map((m: { role: string; content: string }) => ({
@@ -290,7 +290,7 @@ app.post("/api/ai/music", async (req, res) => {
 });
 
 // -------------------------------------------------------------
-// 4. Create Images with gemini-3.1-flash-image / gemini-3.1-flash-lite-image
+// 4. Create Images with gemini-3.1-flash-image-preview / gemini-3.1-flash-image
 // -------------------------------------------------------------
 app.post("/api/ai/image/generate", async (req, res) => {
   try {
@@ -299,7 +299,7 @@ app.post("/api/ai/image/generate", async (req, res) => {
       aspectRatio = "1:1",
       imageSize = "1K",
       style = "editorial",
-      model = "gemini-3.1-flash-image",
+      model = "gemini-3.1-flash-image-preview",
     } = req.body;
 
     if (!prompt) {
@@ -307,22 +307,43 @@ app.post("/api/ai/image/generate", async (req, res) => {
     }
 
     const ai = getGenAI();
-    const targetModel = model === "gemini-3.1-flash-lite-image" ? "gemini-3.1-flash-lite-image" : "gemini-3.1-flash-image";
+    let targetModel = model || "gemini-3.1-flash-image-preview";
 
     const enhancedPrompt = `Janu's Creations Studio Aesthetic (${style} style). ${prompt}. Vivid colors, luxury details, high definition render.`;
 
-    const response = await ai.models.generateContent({
-      model: targetModel,
-      contents: {
-        parts: [{ text: enhancedPrompt }],
-      },
-      config: {
-        imageConfig: {
-          aspectRatio: aspectRatio as any,
-          imageSize: (targetModel === "gemini-3.1-flash-image" ? imageSize : undefined) as any,
+    let response: any;
+    try {
+      response = await ai.models.generateContent({
+        model: targetModel,
+        contents: {
+          parts: [{ text: enhancedPrompt }],
         },
-      },
-    });
+        config: {
+          imageConfig: {
+            aspectRatio: aspectRatio as any,
+            imageSize: (targetModel === "gemini-3.1-flash-lite-image" ? undefined : imageSize) as any,
+          },
+        },
+      });
+    } catch (primaryErr: any) {
+      console.warn(`Primary image model ${targetModel} error:`, primaryErr?.message);
+      // Fallback to gemini-3.1-flash-image or gemini-3.1-flash-lite-image if preview model alias is unavailable
+      const fallbackModel = targetModel === "gemini-3.1-flash-image-preview" ? "gemini-3.1-flash-image" : "gemini-3.1-flash-lite-image";
+      console.log(`Retrying image generation with fallback model ${fallbackModel}...`);
+      targetModel = fallbackModel;
+      response = await ai.models.generateContent({
+        model: fallbackModel,
+        contents: {
+          parts: [{ text: enhancedPrompt }],
+        },
+        config: {
+          imageConfig: {
+            aspectRatio: aspectRatio as any,
+            imageSize: (fallbackModel === "gemini-3.1-flash-lite-image" ? undefined : imageSize) as any,
+          },
+        },
+      });
+    }
 
     let imageUrl: string | null = null;
     let descriptionText = "";
@@ -356,7 +377,7 @@ app.post("/api/ai/image/generate", async (req, res) => {
 });
 
 // -------------------------------------------------------------
-// 5. Edit Images with gemini-3.1-flash-image / gemini-3.1-flash-lite-image
+// 5. Edit Images with gemini-3.1-flash-image-preview / gemini-3.1-flash-image
 // -------------------------------------------------------------
 app.post("/api/ai/image/edit", async (req, res) => {
   try {
@@ -364,7 +385,7 @@ app.post("/api/ai/image/edit", async (req, res) => {
       prompt,
       imageBase64,
       mimeType = "image/png",
-      model = "gemini-3.1-flash-image",
+      model = "gemini-3.1-flash-image-preview",
     } = req.body;
 
     if (!prompt || !imageBase64) {
@@ -372,26 +393,48 @@ app.post("/api/ai/image/edit", async (req, res) => {
     }
 
     const ai = getGenAI();
-    const targetModel = model === "gemini-3.1-flash-lite-image" ? "gemini-3.1-flash-lite-image" : "gemini-3.1-flash-image";
-
+    let targetModel = model || "gemini-3.1-flash-image-preview";
     const cleanBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, "");
 
-    const response = await ai.models.generateContent({
-      model: targetModel,
-      contents: {
-        parts: [
-          {
-            inlineData: {
-              data: cleanBase64,
-              mimeType,
+    let response: any;
+    try {
+      response = await ai.models.generateContent({
+        model: targetModel,
+        contents: {
+          parts: [
+            {
+              inlineData: {
+                data: cleanBase64,
+                mimeType,
+              },
             },
-          },
-          {
-            text: prompt,
-          },
-        ],
-      },
-    });
+            {
+              text: prompt,
+            },
+          ],
+        },
+      });
+    } catch (primaryErr: any) {
+      console.warn(`Primary image edit model ${targetModel} error:`, primaryErr?.message);
+      const fallbackModel = targetModel === "gemini-3.1-flash-image-preview" ? "gemini-3.1-flash-image" : "gemini-3.1-flash-lite-image";
+      targetModel = fallbackModel;
+      response = await ai.models.generateContent({
+        model: fallbackModel,
+        contents: {
+          parts: [
+            {
+              inlineData: {
+                data: cleanBase64,
+                mimeType,
+              },
+            },
+            {
+              text: prompt,
+            },
+          ],
+        },
+      });
+    }
 
     let imageUrl: string | null = null;
     let descriptionText = "";
@@ -421,7 +464,7 @@ app.post("/api/ai/image/edit", async (req, res) => {
 
 // -------------------------------------------------------------
 // 6. Video Generation with Veo (Text-to-Video & Image-to-Video)
-// Model: veo-3.1-lite-generate-preview (standard) / veo-3.1-generate-preview (high quality)
+// Model: veo-3.1-fast-generate-preview (fast/preview) / veo-3.1-generate-preview (high quality) / veo-3.1-lite-generate-preview
 // Aspect ratios: 16:9 (landscape) or 9:16 (portrait)
 // -------------------------------------------------------------
 app.post("/api/ai/video/generate", async (req, res) => {
@@ -432,11 +475,11 @@ app.post("/api/ai/video/generate", async (req, res) => {
       resolution = "720p",
       imageBase64,
       imageMimeType = "image/png",
-      model = "veo-3.1-lite-generate-preview",
+      model = "veo-3.1-fast-generate-preview",
     } = req.body;
 
     const ai = getGenAI();
-    const targetModel = model === "veo-3.1-generate-preview" ? "veo-3.1-generate-preview" : "veo-3.1-lite-generate-preview";
+    let targetModel = model || "veo-3.1-fast-generate-preview";
 
     const videoConfig: any = {
       numberOfVideos: 1,
@@ -447,21 +490,55 @@ app.post("/api/ai/video/generate", async (req, res) => {
     let operation: any;
     if (imageBase64) {
       const cleanImage = imageBase64.replace(/^data:image\/\w+;base64,/, "");
-      operation = await ai.models.generateVideos({
-        model: targetModel,
-        prompt: prompt || "Cinematic video animation with dynamic motion and studio lighting",
-        image: {
-          imageBytes: cleanImage,
-          mimeType: imageMimeType,
-        },
-        config: videoConfig,
-      });
+      try {
+        operation = await ai.models.generateVideos({
+          model: targetModel,
+          prompt: prompt || "Cinematic video animation with dynamic motion and studio lighting",
+          image: {
+            imageBytes: cleanImage,
+            mimeType: imageMimeType,
+          },
+          config: videoConfig,
+        });
+      } catch (opErr: any) {
+        console.warn(`Veo model ${targetModel} failed:`, opErr?.message);
+        if (targetModel === "veo-3.1-fast-generate-preview") {
+          targetModel = "veo-3.1-lite-generate-preview";
+          console.log(`Falling back to ${targetModel}...`);
+          operation = await ai.models.generateVideos({
+            model: targetModel,
+            prompt: prompt || "Cinematic video animation with dynamic motion and studio lighting",
+            image: {
+              imageBytes: cleanImage,
+              mimeType: imageMimeType,
+            },
+            config: videoConfig,
+          });
+        } else {
+          throw opErr;
+        }
+      }
     } else {
-      operation = await ai.models.generateVideos({
-        model: targetModel,
-        prompt: prompt || "Futuristic neon creator studio intro with holographic lighting",
-        config: videoConfig,
-      });
+      try {
+        operation = await ai.models.generateVideos({
+          model: targetModel,
+          prompt: prompt || "Futuristic neon creator studio intro with holographic lighting",
+          config: videoConfig,
+        });
+      } catch (opErr: any) {
+        console.warn(`Veo model ${targetModel} failed:`, opErr?.message);
+        if (targetModel === "veo-3.1-fast-generate-preview") {
+          targetModel = "veo-3.1-lite-generate-preview";
+          console.log(`Falling back to ${targetModel}...`);
+          operation = await ai.models.generateVideos({
+            model: targetModel,
+            prompt: prompt || "Futuristic neon creator studio intro with holographic lighting",
+            config: videoConfig,
+          });
+        } else {
+          throw opErr;
+        }
+      }
     }
 
     res.json({
