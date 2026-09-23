@@ -1,0 +1,55 @@
+{
+  "id": "/",
+  "name": "Janu's Creations AI Studio",
+  "short_name": "Janu's",
+  "description": "All-in-one creator studio ecosystem: live broadcasting, music production, photo & video AI, and creator monetization.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "categories": ["entertainment", "music", "photo", "productivity"],
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Live Broadcast Studio",
+      "short_name": "Live",
+      "description": "Launch live streaming and superchats",
+      "url": "/?view=creator&tab=live",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Music Studio",
+      "short_name": "Music",
+      "description": "Open Lyria and Music Studio",
+      "url": "/?view=creator&tab=music-studio",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

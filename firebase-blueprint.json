@@ -1,0 +1,253 @@
+{
+  "entities": {
+    "UserProfile": {
+      "collection": "users",
+      "fields": {
+        "userId": { "type": "string", "description": "Firebase Auth UID" },
+        "name": { "type": "string", "description": "Full creator name" },
+        "handle": { "type": "string", "description": "Creator handle e.g. @januaryrebl" },
+        "email": { "type": "string", "description": "Account email address" },
+        "role": { "type": "string", "description": "Creator role" },
+        "tagline": { "type": "string", "description": "Profile tagline" },
+        "bio": { "type": "string", "description": "Biography statement" },
+        "manifesto": { "type": "string", "description": "Creator manifesto" },
+        "avatar": { "type": "string", "description": "Avatar image URL" },
+        "coverImage": { "type": "string", "description": "Cover background image URL" },
+        "rank": { "type": "string", "description": "Current leaderboard rank" },
+        "totalEarnings": { "type": "number", "description": "Aggregated USD earnings" },
+        "reputationScore": { "type": "number", "description": "Algorithmic reputation score (0-100)" },
+        "collabStatus": { "type": "string", "description": "Collaboration availability status" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      }
+    },
+    "Creation": {
+      "collection": "creations",
+      "fields": {
+        "id": { "type": "string", "description": "Creation unique ID" },
+        "userId": { "type": "string", "description": "Creator user UID" },
+        "type": { "type": "string", "description": "reel | photo | audio | design" },
+        "title": { "type": "string", "description": "Artwork or reel title" },
+        "description": { "type": "string", "description": "Artwork caption/description" },
+        "mediaUrl": { "type": "string", "description": "Media content URL" },
+        "category": { "type": "string", "description": "Category or genre" },
+        "tags": { "type": "array", "description": "List of tags" },
+        "metrics": { "type": "map", "description": "Views, likes, tips, shares counters" },
+        "isPinned": { "type": "boolean", "description": "Featured on profile top" },
+        "createdAt": { "type": "string", "description": "ISO timestamp" }
+      }
+    },
+    "ScheduledPost": {
+      "collection": "scheduled_posts",
+      "fields": {
+        "id": { "type": "string", "description": "Scheduled post ID" },
+        "userId": { "type": "string", "description": "Owner UID" },
+        "type": { "type": "string", "description": "reel | photo | text | audio" },
+        "title": { "type": "string", "description": "Post title" },
+        "caption": { "type": "string", "description": "Caption text" },
+        "mediaUrl": { "type": "string", "description": "Media asset URL" },
+        "author": { "type": "string", "description": "Display author name" },
+        "audioTrack": { "type": "string", "description": "Audio track used" },
+        "aspectRatio": { "type": "string", "description": "Aspect ratio e.g. 9:16" },
+        "duration": { "type": "string", "description": "Duration string" },
+        "targetDate": { "type": "string", "description": "Scheduled target date YYYY-MM-DD" },
+        "targetTime": { "type": "string", "description": "Scheduled target time e.g. 06:00 PM EST" },
+        "status": { "type": "string", "description": "queued | publishing | published | failed" },
+        "platforms": { "type": "array", "description": "Selected distribution channels" },
+        "createdAt": { "type": "string", "description": "ISO timestamp" }
+      }
+    },
+    "ContestSubmission": {
+      "collection": "contest_submissions",
+      "fields": {
+        "id": { "type": "string", "description": "Submission ID" },
+        "contestId": { "type": "string", "description": "Contest reference ID" },
+        "userId": { "type": "string", "description": "Participant UID" },
+        "creator": { "type": "string", "description": "Creator display name" },
+        "avatar": { "type": "string", "description": "Participant avatar URL" },
+        "title": { "type": "string", "description": "Submission title" },
+        "mediaUrl": { "type": "string", "description": "Submission media URL" },
+        "aiScore": { "type": "number", "description": "AI scored composite value (0-100)" },
+        "breakdown": { "type": "map", "description": "Detailed scoring components" },
+        "status": { "type": "string", "description": "active | scored | winner" },
+        "submittedAt": { "type": "string", "description": "ISO timestamp" }
+      }
+    },
+    "LiveMessage": {
+      "collection": "live_messages",
+      "fields": {
+        "id": { "type": "string", "description": "Message ID" },
+        "userId": { "type": "string", "description": "Sender UID" },
+        "user": { "type": "string", "description": "Sender display username" },
+        "avatar": { "type": "string", "description": "Sender avatar URL" },
+        "text": { "type": "string", "description": "Chat content" },
+        "badge": { "type": "string", "description": "VIP | Top Tipper | Moderator" },
+        "gift": { "type": "map", "description": "Tipped gift info if any" },
+        "timestamp": { "type": "string", "description": "ISO timestamp" }
+      }
+    },
+    "PayoutRecord": {
+      "collection": "payout_records",
+      "fields": {
+        "id": { "type": "string", "description": "Transaction ID" },
+        "userId": { "type": "string", "description": "Creator UID" },
+        "amount": { "type": "number", "description": "Amount in USD" },
+        "method": { "type": "string", "description": "PayPal Sandbox | Stripe | Direct" },
+        "destination": { "type": "string", "description": "Recipient email or account" },
+        "status": { "type": "string", "description": "Completed | Processing | Failed" },
+        "txHash": { "type": "string", "description": "Cryptographic ledger confirmation hash" },
+        "timestamp": { "type": "string", "description": "ISO timestamp" }
+      }
+    },
+    "Transaction": {
+      "collection": "transactions",
+      "fields": {
+        "id": { "type": "string", "description": "Real transaction unique ID" },
+        "userId": { "type": "string", "description": "Creator user UID" },
+        "amount": { "type": "number", "description": "Gross USD transaction amount" },
+        "netAmount": { "type": "number", "description": "Net creator earnings in USD" },
+        "platformCut": { "type": "number", "description": "Platform cut fee (15%)" },
+        "source": { "type": "string", "description": "Direct PayPal Gateway | Live Stream Tip | Reel Royalty | Contest Prize" },
+        "category": { "type": "string", "description": "tips | royalties | contests | gateway | subscriptions" },
+        "description": { "type": "string", "description": "Transaction details" },
+        "creatorName": { "type": "string", "description": "Creator name" },
+        "creatorHandle": { "type": "string", "description": "Creator handle" },
+        "payerName": { "type": "string", "description": "Payer customer name" },
+        "payerEmail": { "type": "string", "description": "Payer email" },
+        "status": { "type": "string", "description": "completed | settled | pending | refunded | failed" },
+        "currency": { "type": "string", "description": "USD" },
+        "timestamp": { "type": "string", "description": "ISO timestamp" },
+        "date": { "type": "string", "description": "YYYY-MM-DD" },
+        "clientRef": { "type": "string", "description": "PayPal transaction or reference ID" }
+      }
+    },
+    "RevenueRecord": {
+      "collection": "revenue_records",
+      "fields": {
+        "id": { "type": "string", "description": "Revenue event ID" },
+        "userId": { "type": "string", "description": "Creator UID" },
+        "amount": { "type": "number", "description": "Gross revenue in USD" },
+        "netAmount": { "type": "number", "description": "Net creator earnings in USD" },
+        "source": { "type": "string", "description": "Live Stream Tip | Reel Monetization | Music Royalty | Contest Award | Direct Payment" },
+        "category": { "type": "string", "description": "tips | royalties | contests | gateway | subscriptions" },
+        "description": { "type": "string", "description": "Detailed revenue description" },
+        "creatorName": { "type": "string", "description": "Creator display name" },
+        "creatorHandle": { "type": "string", "description": "Creator handle" },
+        "status": { "type": "string", "description": "settled | pending | processing" },
+        "currency": { "type": "string", "description": "USD" },
+        "platformCut": { "type": "number", "description": "Platform fee retained (15%)" },
+        "timestamp": { "type": "string", "description": "ISO timestamp of revenue event" },
+        "date": { "type": "string", "description": "YYYY-MM-DD date string" }
+      }
+    },
+    "RevenueMilestone": {
+      "collection": "revenue_milestones",
+      "fields": {
+        "id": { "type": "string", "description": "Milestone ID" },
+        "userId": { "type": "string", "description": "Creator UID" },
+        "threshold": { "type": "number", "description": "Target USD threshold" },
+        "label": { "type": "string", "description": "Milestone name" },
+        "description": { "type": "string", "description": "Milestone details" },
+        "tier": { "type": "string", "description": "BRONZE | SILVER | GOLD | PLATINUM | DIAMOND | CUSTOM" },
+        "enabled": { "type": "boolean", "description": "Whether milestone tracking is active" },
+        "triggered": { "type": "boolean", "description": "Whether milestone has been reached" },
+        "triggeredAt": { "type": "string", "description": "ISO timestamp when milestone was triggered" }
+      }
+    },
+    "PayPalIPNEvent": {
+      "collection": "paypal_ipn_events",
+      "fields": {
+        "transactionId": { "type": "string", "description": "PayPal transaction or tracking ID" },
+        "paymentStatus": { "type": "string", "description": "Raw PayPal payment status" },
+        "normalizedStatus": { "type": "string", "description": "COMPLETED | PENDING | FAILED | REFUNDED" },
+        "grossAmount": { "type": "number", "description": "Gross amount in USD" },
+        "netCreatorAmount": { "type": "number", "description": "Net creator earnings in USD" },
+        "platformFee": { "type": "number", "description": "Platform cut in USD" },
+        "currency": { "type": "string", "description": "Currency code e.g. USD" },
+        "payerEmail": { "type": "string", "description": "Payer email address" },
+        "payerName": { "type": "string", "description": "Payer display name" },
+        "itemName": { "type": "string", "description": "Item or service description" },
+        "verificationStatus": { "type": "string", "description": "VERIFIED | SIMULATED | INVALID | FAILED" },
+        "rawPayload": { "type": "map", "description": "Full raw IPN key-value payload map" },
+        "processedAt": { "type": "string", "description": "ISO timestamp when IPN was processed" }
+      }
+    },
+    "PayoutSetting": {
+      "collection": "payout_settings",
+      "fields": {
+        "id": { "type": "string", "description": "Setting ID or creator UID" },
+        "userId": { "type": "string", "description": "Creator user UID" },
+        "enabled": { "type": "boolean", "description": "Whether automated threshold payout trigger is active" },
+        "thresholdAmount": { "type": "number", "description": "Threshold limit amount in USD" },
+        "paypalEmail": { "type": "string", "description": "Registered PayPal account email destination" },
+        "payoutMode": { "type": "string", "description": "full_balance | threshold_amount | custom_reserve" },
+        "minimumReserve": { "type": "number", "description": "Minimum balance reserve cushion in USD" },
+        "autoApprove": { "type": "boolean", "description": "Whether payouts auto-approve without secondary modal" },
+        "lastTriggeredAt": { "type": "string", "description": "ISO timestamp when auto payout was last triggered" },
+        "lastTriggeredAmount": { "type": "number", "description": "Amount disbursed in last auto payout" },
+        "lastBatchId": { "type": "string", "description": "PayPal payout batch ID of last auto payout" },
+        "lastTxId": { "type": "string", "description": "Transaction ID of last auto payout" },
+        "totalAutoDisbursed": { "type": "number", "description": "Aggregated USD auto-disbursed via threshold triggers" },
+        "autoPayoutCount": { "type": "number", "description": "Count of automated threshold payouts triggered" },
+        "history": { "type": "array", "description": "Log history of automated payout sweeps" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp when settings were last saved" }
+      }
+    },
+    "UploadedSong": {
+      "collection": "uploaded_songs",
+      "fields": {
+        "id": { "type": "string", "description": "Song ID in Firestore" },
+        "userId": { "type": "string", "description": "Owner creator UID" },
+        "creatorHandle": { "type": "string", "description": "Creator handle e.g. @januaryrebl" },
+        "title": { "type": "string", "description": "Song track title" },
+        "artist": { "type": "string", "description": "Artist or group name" },
+        "genre": { "type": "string", "description": "Genre label" },
+        "genreCategory": { "type": "string", "description": "Synth-Wave | Lo-Fi | Cinematic | Upbeat | Hip-Hop | Gospel | Afrobeat | Rock | Custom" },
+        "bpm": { "type": "number", "description": "Beats per minute (e.g. 120)" },
+        "key": { "type": "string", "description": "Musical key signature e.g. D Minor" },
+        "duration": { "type": "number", "description": "Audio duration in seconds" },
+        "durationFormatted": { "type": "string", "description": "Formatted duration string e.g. 3:15" },
+        "audioUrl": { "type": "string", "description": "Audio file download URL" },
+        "audioStoragePath": { "type": "string", "description": "Firebase Storage reference path" },
+        "coverArtUrl": { "type": "string", "description": "Cover art image URL" },
+        "lyrics": { "type": "string", "description": "Song lyrics and timestamps" },
+        "vocalType": { "type": "string", "description": "full_vocals | instrumental | acapella | stem_mixed" },
+        "plays": { "type": "string", "description": "Plays counter" },
+        "likes": { "type": "number", "description": "Likes counter" },
+        "isCustomUpload": { "type": "boolean", "description": "Flag indicating uploaded creator master" },
+        "isFirebaseStorage": { "type": "boolean", "description": "Stored in Firebase Storage" },
+        "tags": { "type": "array", "description": "Musical tag descriptors" },
+        "createdAt": { "type": "string", "description": "ISO creation timestamp" },
+        "updatedAt": { "type": "string", "description": "ISO last update timestamp" }
+      }
+    },
+    "AIAsset": {
+      "collection": "ai_assets",
+      "fields": {
+        "id": { "type": "string", "description": "Asset unique ID" },
+        "userId": { "type": "string", "description": "Creator user UID" },
+        "creatorName": { "type": "string", "description": "Creator name" },
+        "type": { "type": "string", "description": "image | audio_stem | reel_draft | video" },
+        "title": { "type": "string", "description": "Asset title" },
+        "description": { "type": "string", "description": "Asset description or notes" },
+        "prompt": { "type": "string", "description": "Generation prompt used" },
+        "mediaUrl": { "type": "string", "description": "Primary asset media URL" },
+        "thumbnailUrl": { "type": "string", "description": "Thumbnail preview image URL" },
+        "storagePath": { "type": "string", "description": "Firebase Storage reference path" },
+        "fileSize": { "type": "string", "description": "File size string e.g. 2.4 MB" },
+        "aspectRatio": { "type": "string", "description": "Aspect ratio e.g. 16:9 or 9:16" },
+        "duration": { "type": "number", "description": "Duration in seconds" },
+        "durationFormatted": { "type": "string", "description": "Formatted duration e.g. 0:30" },
+        "bpm": { "type": "number", "description": "Tempo in BPM" },
+        "key": { "type": "string", "description": "Musical key signature" },
+        "genre": { "type": "string", "description": "Genre category" },
+        "modelUsed": { "type": "string", "description": "AI model name e.g. lyria-3 or veo-3" },
+        "tags": { "type": "array", "description": "Asset tags" },
+        "metadata": { "type": "map", "description": "Extended metadata e.g. filters, layers" },
+        "isFavorite": { "type": "boolean", "description": "Favorited by creator" },
+        "folder": { "type": "string", "description": "Folder or workspace collection name e.g. Campaigns, Drafts, Stems" },
+        "createdAt": { "type": "string", "description": "ISO timestamp" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      }
+    }
+  }
+}

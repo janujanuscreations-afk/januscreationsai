@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.januscreations.app",
+      "sha256_cert_fingerprints": [
+        "DEFAULT_FINGERPRINT_WILL_BE_REPLACED_BY_PLAY_CONSOLE_SIGNING_KEY"
+      ]
+    }
+  }
+]

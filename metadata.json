@@ -1,0 +1,11 @@
+{
+  "name": "Janu's Creations AI Studio",
+  "description": "All-in-one creator studio ecosystem: D3.js Predictive Revenue Growth engine with real-time tip velocity calculus, Ambient Soundscape Web Audio engine for focus-mode editing sessions (generative synth-wave, 10Hz binaural beats & real-time spectrum visualizer), Quick Switcher command palette (Cmd/Ctrl + K), Studio Settings (Cmd/Ctrl + ,), Predictive Revenue Forecasting with Monte Carlo simulations, Advanced Analytics retention curves, Boss Vault security gate, public Creator Profile, floating AI Co-Pilot, live broadcasting, AI contest tournaments, vertical reel editor, photo alchemist, music studio, and autonomous operations.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

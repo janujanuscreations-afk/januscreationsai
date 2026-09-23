@@ -1,0 +1,1 @@
+{"dependencies":{"firebase-functions":"^6.1.0"},"description":"PayPal Checkout + Payouts backend on Firebase Cloud Functions","engines":{"node":"20"},"main":"index.js","name":"paypal-functions","private":true}

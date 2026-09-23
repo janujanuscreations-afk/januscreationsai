@@ -1,0 +1,80 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global permissive access for all collections & documents so the published app is never locked
+    match /{document=**} {
+      allow read, write: if true;
+    }
+
+    // User Profiles
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Creations & Showcase Items
+    match /creations/{creationId} {
+      allow read, write: if true;
+    }
+
+    // Scheduled Posts
+    match /scheduled_posts/{postId} {
+      allow read, write: if true;
+    }
+
+    // Contest Submissions
+    match /contest_submissions/{submissionId} {
+      allow read, write: if true;
+    }
+
+    // Live Messages & Stream Chat
+    match /live_messages/{messageId} {
+      allow read, write: if true;
+    }
+
+    // Payout Records & Live Payouts
+    match /payout_records/{payoutId} {
+      allow read, write: if true;
+    }
+
+    match /payouts/{payoutId} {
+      allow read, write: if true;
+    }
+
+    // Real Transactions & Revenue Records
+    match /transactions/{transactionId} {
+      allow read, write: if true;
+    }
+
+    match /revenue_records/{revenueId} {
+      allow read, write: if true;
+    }
+
+    // Revenue Milestones
+    match /revenue_milestones/{milestoneId} {
+      allow read, write: if true;
+    }
+
+    // PayPal IPN & Webhook Events
+    match /paypal_ipn_events/{eventId} {
+      allow read, write: if true;
+    }
+
+    // Auto-Payout & Threshold Settings
+    match /payout_settings/{settingId} {
+      allow read, write: if true;
+    }
+
+    // Creator Music Library & Uploaded Songs
+    match /uploaded_songs/{songId} {
+      allow read, write: if true;
+    }
+
+    // AI Asset Library (AI Art, Audio Stems, Reel Drafts, Videos)
+    match /ai_assets/{assetId} {
+      allow read, write: if true;
+    }
+  }
+}
+
